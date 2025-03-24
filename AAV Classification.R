@@ -23,15 +23,92 @@ data$gender <- as.numeric(data$gender)
 data$date_enroll <- as.Date(data$date_enroll, "%m/%d/%Y")
 date_enroll_no_NA <- data[-which(is.na(data$date_enroll)),]
 
-data$pvas_chest___3[data$lungs_s_node == "1"|data$lungs_cav == "1"|data$lungs_m_node == "1"] = "1"
+data$pvas_chest___3[data$lungs_s_node == 1|data$lungs_cav == 1|data$lungs_m_node == 1] = 1
 
-data$pvas_chest___5[data$lungs_mig_infil == "1"|data$lungs_fix_infil == "1"] = "1"
+data$pvas_chest___5[data$lungs_mig_infil == 1|data$lungs_fix_infil == 1] = 1
+
+data$pvas_chest___4[data$lungs_effusion == 1] = 1
+
+data$pvas_chest___2[data$lungs_sten == 1] = 1
+
 
 data_missing <- data[which(data$dcvas_result3 == "" | data$EMAclass == "" | data$diagnosis == ""),]
 
 data <- data[which(data$dcvas_result3 != "" 
                        | data$EMAclass != ""
                        | data$diagnosis != ""),]
+
+data$cns[data$pvas_cns___1 == 1 | 
+           data$pvas_cns___2 == 1 | 
+           data$pvas_cns___3 == 1 |
+           data$pvas_cns___4 == 1 | 
+           data$pvas_cns___5 == 1 | 
+           data$pvas_cns___6 == 1 | 
+           data$pvas_cns___7 == 1 |
+           data$pvas_cns___8 == 1 |
+           data$pvas_cns___9 == 1] = 1
+
+
+data$ren[data$pvas_renal___1 == 1 | 
+           data$pvas_renal___2 == 1 | 
+           data$pvas_renal___3 == 1 |
+           data$pvas_renal___4 == 1 | 
+           data$pvas_renal___5 == 1 | 
+           data$pvas_renal___6 == 1 | 
+           data$pvas_renal___8 == 1 ] = 1
+
+data$gi[data$pvas_gi___1 == 1 | 
+          data$pvas_gi___2 == 1 | 
+          data$pvas_gi___3 == 1 | 
+          data$pvas_gi___4 == 1] = 1
+
+data$cardio[data$pvas_cv___1 == 1 | 
+              data$pvas_cv___2 == 1 | 
+              data$pvas_cv___3 == 1 |
+              data$pvas_cv___4 == 1 | 
+              data$pvas_cv___5 == 1 | 
+              data$pvas_cv___6 == 1 | 
+              data$pvas_cv___7 == 1 |
+              data$pvas_cv___8 == 1 |
+              data$pvas_cv___9 == 1] = 1
+
+data$chest[data$pvas_ent___1 == 1 | 
+             data$pvas_ent___2 == 1 | 
+             data$pvas_ent___3 == 1 | 
+             data$pvas_ent___4 == 1 | 
+             data$pvas_ent___5 == 1] = 1
+
+data$ent[data$pvas_ent___1 == 1 | 
+           data$pvas_ent___2 == 1 | 
+           data$pvas_ent___3 == 1 | 
+           data$pvas_ent___4 == 1 | 
+           data$pvas_ent___5 == 1] = 1
+
+data$muc[data$pvas_mucous2___1 == 1 | 
+           data$pvas_mucous2___2 == 1 | 
+           data$pvas_mucous2___3 == 1 | 
+           data$pvas_mucous2___4 == 1 |
+           data$pvas_mucous2___5 == 1 | 
+           data$pvas_mucous2___6 == 1 | 
+           data$pvas_mucous2___7 == 1 | 
+           data$pvas_mucous2___8 == 1 |
+           data$pvas_mucous2___9 == 1 |
+           data$pvas_mucous2___10 == 1] = 1
+
+data$cuta[data$pvas_cut2___1 == 1 | 
+            data$pvas_cut2___2 == 1 | 
+            data$pvas_cut2___3 == 1 | 
+            data$pvas_cut2___4 == 1 |
+            data$pvas_cut2___5 == 1 | 
+            data$pvas_cut2___6 == 1 | 
+            data$pvas_cut2___7 == 1 | 
+            data$pvas_cut2___8 == 1 |
+            data$pvas_cut2___9 == 1] = 1
+
+data$gen[data$pvas_gen1___1 == 1 | 
+           data$pvas_gen1___2 == 1 | 
+           data$pvas_gen1___3 == 1 | 
+           data$pvas_gen1___4 == 1] = 1
 
 
 #### SEPERATE DIAGNOSIS ####
@@ -298,10 +375,10 @@ nrow(GPA_h_loss) + nrow(GPA_c_loss) + nrow(GPA_s_loss)
 # describeFactors(MPA$dcvas_gpa03)
 # describeFactors(both_ACR$dcvas_gpa03)
 
-nrow(all_gpa03)
 nrow(gpa_gpa03)
 nrow(mpa_gpa03)
 nrow(both_gpa03)
+nrow(all_gpa03)
 nrow(not_gpa03)
 nrow(data_gpa03)
 
@@ -340,10 +417,11 @@ describeFactors(data$pr3_result)
 # describeFactors(MPA$dcvas_gpa05)
 # describeFactors(both_ACR$dcvas_gpa05)
 
-nrow(all_gpa05)
+
 nrow(gpa_gpa05)
 nrow(mpa_gpa05)
 nrow(both_gpa05)
+nrow(all_gpa05)
 nrow(not_gpa05)
 nrow(data_gpa05)
 
@@ -352,10 +430,10 @@ nrow(data_gpa05)
 # describeFactors(MPA$dcvas_mpa03)
 # describeFactors(both_ACR$dcvas_mpa03)
 
-nrow(all_mpa03)
 nrow(gpa_mpa03)
 nrow(mpa_mpa03)
 nrow(both_mpa03)
+nrow(all_mpa03)
 nrow(not_mpa03)
 nrow(data_mpa03)
 
@@ -365,10 +443,11 @@ nrow(data_mpa03)
 # describeFactors(MPA$dcvas_mpa04)
 # describeFactors(both_ACR$dcvas_mpa04)
 
-nrow(all_mpa04)
+
 nrow(gpa_mpa04)
 nrow(mpa_mpa04)
 nrow(both_mpa04)
+nrow(all_mpa04)
 nrow(not_mpa04)
 nrow(data_mpa04)
 
@@ -376,11 +455,11 @@ nrow(data_mpa04)
 # effusion of nasal/paranasal sinuses or mastoiditis
 # describeFactors(GPA$dcvas_gpa07)
 
-nrow(all_gpa07)
 nrow(gpa_gpa07)
 nrow(mpa_gpa07)
 nrow(both_gpa07)
 nrow(not_gpa07)
+nrow(all_gpa07)
 nrow(data_gpa07)
 
 #Granuloma, extravascular granulomatous inflammation or giant cells
@@ -412,7 +491,7 @@ EMA_GPA_only <- data[which(data$diagnosis != 1 & data$diagnosis != 2
 
 ACR_GPA <- data[which(data$dcvas_result3 == "GPA" & data$dcvas_result3 != "GPA/MPA"),]
 
-ACR_GPA_only <- data[which(data$diagnosis != 1 & data$diagnosis != 1 
+ACR_GPA_only <- data[which(data$diagnosis != 1 & data$diagnosis != 2 
                            & data$EMAclass != "GPA"
                            & data$dcvas_result3 == "GPA"
                            & data$dcvas_result3 != "GPA/MPA"),]
@@ -487,45 +566,77 @@ MPA_any <- data[which(data$EMAclass == "MPA" | data$dcvas_result3 == "MPA"
                       | (data$diagnosis == 3 | data$diagnosis == 4)
                       & data$dcvas_result3 != "GPA/MPA"),] 
 
-### FIG 3c ####
+#### FIG 3a & 3b Alternative 1 ####
+MD_GPA_inc <- data[which(data$diagnosis == 1|data$diagnosis == 2),]
 
-ACR_GPA_ACR_MPA <- data[which(data$EMAclass != "GPA"
-                              & data$dcvas_result3 == "GPA/MPA"),]
+MD_GPA_only_inc <- data[which((data$diagnosis == 1|data$diagnosis == 2) 
+                              & data$EMAclass != "GPA"
+                              & data$dcvas_result3 != "GPA"),]
 
-EMA_GPA_ACR_MPA_ACR_GPA <- data[which(data$EMAclass == "GPA" 
-                                      & data$dcvas_result3 == "GPA/MPA"),]
+EMA_GPA_inc <- data[which(data$EMAclass == "GPA"),]
 
-EMA_GPA_ACR_GPA <- data[which(data$EMAclass == "GPA" 
+EMA_GPA_only_inc <- data[which(data$diagnosis != 1 & data$diagnosis != 2 
+                               & data$EMAclass == "GPA"
+                               & data$dcvas_result3 != "GPA"),]
+
+ACR_GPA_inc <- data[which(data$dcvas_result3 == "GPA"),]
+
+ACR_GPA_only_inc <- data[which(data$diagnosis != 1 & data$diagnosis != 2 
+                               & data$EMAclass != "GPA"
+                               & data$dcvas_result3 == "GPA"),]
+
+MD_EMA_GPA_inc <- data[which((data$diagnosis == 1 | data$diagnosis == 2) 
+                             & data$EMAclass == "GPA"
+                             & data$dcvas_result3 != "GPA"),]
+
+EMA_ACR_GPA_inc <- data[which(data$diagnosis != 1 & data$diagnosis != 2 
+                              & data$EMAclass == "GPA"
                               & data$dcvas_result3 == "GPA"),]
 
-EMA_GPA_ACR_MPA <- data[which(data$EMAclass == "GPA" 
-                              & data$dcvas_result3 == "MPA"),]
+ACR_MD_GPA_inc <- data[which((data$diagnosis == 1 | data$diagnosis == 2) 
+                             & data$EMAclass != "GPA"
+                             & data$dcvas_result3 == "GPA"),]
 
-EMA_nonGPA_ACR_MPA <- data[which(data$EMAclass != "GPA" 
-                              & data$dcvas_result3 == "MPA"),]
+GPA_all_inc <- data[which(data$EMAclass == "GPA" 
+                          & data$dcvas_result3 == "GPA" 
+                          & (data$diagnosis == 1 | data$diagnosis == 2)),]
 
-EMA_nonGPA_ACR_GPA <- data[which(data$EMAclass != "GPA" 
-                                 & data$dcvas_result3 == "GPA"),]
+GPA_any_inc <- data[which((data$EMAclass == "GPA" 
+                       | data$dcvas_result3 == "GPA" 
+                       | data$diagnosis == 1 | data$diagnosis == 2)),]
 
-EMA_GPA_ACR_nonMPA <- data[which(data$EMAclass == "GPA" 
-                              & data$dcvas_result3 != "MPA"
-                              & data$dcvas_result3 != "GPA"
-                              & data$dcvas_result3 != "GPA/MPA"),]
+MD_MPA_inc <- data[which(data$diagnosis == 3|data$diagnosis == 4),]
 
-all_GPAMPA <- data[which(data$EMAclass == "GPA"
-                                      | data$dcvas_result3 == "GPA"
-                                      | data$dcvas_result3 == "MPA"
-                                      | data$dcvas_result3 == "GPA/MPA"),]
-
-
-describeFactors(data$dcvas_result3)
-
-EMA_nonGPA_ACR_MPA <- data[which(data$EMAclass != "GPA" 
-                              & data$dcvas_result3 == "MPA"),]
-
-EMA_GPA_ACR_nonMPA <- data[which(data$EMAclass == "GPA" 
+MD_MPA_only_inc <- data[which((data$diagnosis == 3|data$diagnosis == 4) 
+                              & data$EMAclass != "MPA"
                               & data$dcvas_result3 != "MPA"),]
 
+EMA_MPA_inc <- data[which(data$EMAclass == "MPA"),]
+
+EMA_MPA_only_inc <- data[which(data$diagnosis != 3 & data$diagnosis != 4 
+                               & data$EMAclass == "MPA"
+                               & data$dcvas_result3 != "MPA"),]
+
+ACR_MPA_inc <- data[which(data$dcvas_result3 == "MPA"),]
+
+ACR_MPA_only_inc <- data[which(data$diagnosis != 3 & data$diagnosis != 4 
+                               & data$EMAclass != "MPA"
+                               & data$dcvas_result3 == "MPA"),]
+
+MD_EMA_MPA_inc <- data[which((data$diagnosis == 3 | data$diagnosis == 4) 
+                             & data$EMAclass == "MPA"
+                             & data$dcvas_result3 != "MPA"),]
+
+EMA_ACR_MPA_inc <- data[which(data$diagnosis != 3 & data$diagnosis != 4 
+                              & data$EMAclass == "MPA"
+                              & data$dcvas_result3 == "MPA"),]
+
+ACR_MD_MPA_inc <- data[which((data$diagnosis == 3 | data$diagnosis == 4) 
+                             & data$EMAclass != "MPA"
+                             & data$dcvas_result3 == "MPA"),]
+
+MPA_all_inc <- data[which(data$EMAclass == "MPA" & data$dcvas_result3 == "MPA" 
+                          & (data$diagnosis == 3 | data$diagnosis == 4)),]
 
 #### FIG 3a & 3b Alternative 2 ####
 
@@ -543,7 +654,7 @@ EMA_GPA_only_inc2 <- data[which(data$diagnosis != 1 & data$diagnosis != 2
 
 ACR_GPA_inc2 <- data[which(data$dcvas_result3 == "GPA" | data$dcvas_result3 == "GPA/MPA"),]
 
-ACR_GPA_only_inc2 <- data[which(data$diagnosis != 1 & data$diagnosis != 1 
+ACR_GPA_only_inc2 <- data[which(data$diagnosis != 1 & data$diagnosis != 2 
                            & data$EMAclass != "GPA"
                            & (data$dcvas_result3 == "GPA"|data$dcvas_result3 == "GPA/MPA")),]
 
@@ -563,6 +674,10 @@ ACR_MD_GPA_inc2 <- data[which((data$diagnosis == 1 | data$diagnosis == 2)
 GPA_all_inc2 <- data[which(data$EMAclass == "GPA" 
                       & (data$dcvas_result3 == "GPA" | data$dcvas_result3 == "GPA/MPA") 
                       & (data$diagnosis == 1 | data$diagnosis == 2)),]
+
+GPA_any_inc_2 <- data[which((data$EMAclass == "GPA" 
+                           | data$dcvas_result3 == "GPA" | data$dcvas_result3 == "GPA/MPA"
+                           | data$diagnosis == 1 | data$diagnosis == 2)),]
 
 MD_MPA_inc2 <- data[which(data$diagnosis == 3|data$diagnosis == 4),]
 
@@ -594,79 +709,456 @@ ACR_MD_MPA_inc2 <- data[which((data$diagnosis == 3 | data$diagnosis == 4)
                          & data$EMAclass != "MPA"
                          & (data$dcvas_result3 == "MPA"|data$dcvas_result3 == "GPA/MPA")),]
 
-MPA_all_inc2 <- data[which(data$EMAclass == "MPA" & (data$dcvas_result3 == "MPA"|data$dcvas_result3 == "GPA/MPA")
+MPA_all_inc2 <- data[which(data$EMAclass == "MPA" 
+                      & (data$dcvas_result3 == "MPA"|data$dcvas_result3 == "GPA/MPA")
                       & (data$diagnosis == 3 | data$diagnosis == 4)),]
 
 
-#### FIG 3a & 3b Alternative 1 ####
-MD_GPA_inc <- data[which(data$diagnosis == 1|data$diagnosis == 2),]
-
-MD_GPA_only_inc <- data[which((data$diagnosis == 1|data$diagnosis == 2) 
-                          & data$EMAclass != "GPA"
-                          & data$dcvas_result3 != "GPA"),]
-
-EMA_GPA_inc <- data[which(data$EMAclass == "GPA"),]
-
-EMA_GPA_only_inc <- data[which(data$diagnosis != 1 & data$diagnosis != 2 
-                           & data$EMAclass == "GPA"
-                           & data$dcvas_result3 != "GPA"),]
-
-ACR_GPA_inc <- data[which(data$dcvas_result3 == "GPA"),]
-
-ACR_GPA_only_inc <- data[which(data$diagnosis != 1 & data$diagnosis != 1 
-                           & data$EMAclass != "GPA"
-                           & data$dcvas_result3 == "GPA"),]
-
-MD_EMA_GPA_inc <- data[which((data$diagnosis == 1 | data$diagnosis == 2) 
-                         & data$EMAclass == "GPA"
-                         & data$dcvas_result3 != "GPA"),]
-
-EMA_ACR_GPA_inc <- data[which(data$diagnosis != 1 & data$diagnosis != 2 
-                          & data$EMAclass == "GPA"
-                          & data$dcvas_result3 == "GPA"),]
-
-ACR_MD_GPA_inc <- data[which((data$diagnosis == 1 | data$diagnosis == 2) 
-                         & data$EMAclass != "GPA"
-                         & data$dcvas_result3 == "GPA"),]
-
-GPA_all_inc <- data[which(data$EMAclass == "GPA" 
-                      & data$dcvas_result3 == "GPA" 
-                      & (data$diagnosis == 1 | data$diagnosis == 2)),]
-
-MD_MPA_inc <- data[which(data$diagnosis == 3|data$diagnosis == 4),]
-
-MD_MPA_only_inc <- data[which((data$diagnosis == 3|data$diagnosis == 4) 
-                          & data$EMAclass != "MPA"
-                          & data$dcvas_result3 != "MPA"),]
-
-EMA_MPA_inc <- data[which(data$EMAclass == "MPA"),]
-
-EMA_MPA_only_inc <- data[which(data$diagnosis != 3 & data$diagnosis != 4 
-                           & data$EMAclass == "MPA"
-                           & data$dcvas_result3 != "MPA"),]
-
-ACR_MPA_inc <- data[which(data$dcvas_result3 == "MPA"),]
-
-ACR_MPA_only_inc <- data[which(data$diagnosis != 3 & data$diagnosis != 4 
-                           & data$EMAclass != "MPA"
-                           & data$dcvas_result3 == "MPA"),]
-
-MD_EMA_MPA_inc <- data[which((data$diagnosis == 3 | data$diagnosis == 4) 
-                         & data$EMAclass == "MPA"
-                         & data$dcvas_result3 != "MPA"),]
-
-EMA_ACR_MPA_inc <- data[which(data$diagnosis != 3 & data$diagnosis != 4 
-                          & data$EMAclass == "MPA"
-                          & data$dcvas_result3 == "MPA"),]
-
-ACR_MD_MPA_inc <- data[which((data$diagnosis == 3 | data$diagnosis == 4) 
-                         & data$EMAclass != "MPA"
-                         & data$dcvas_result3 == "MPA"),]
-
-MPA_all_inc <- data[which(data$EMAclass == "MPA" & data$dcvas_result3 == "MPA" 
-                      & (data$diagnosis == 3 | data$diagnosis == 4)),]
+MPA_any_inc2 <- data[which(data$EMAclass == "MPA" | data$dcvas_result3 == "MPA"  
+                      | data$diagnosis == 3 | data$diagnosis == 4
+                      | data$dcvas_result3 == "GPA/MPA"),] 
 
 
+### FIG 3c ####
+
+#B
+ACR_GPA_ACR_MPA <- data[which(data$EMAclass != "GPA"
+                              & data$dcvas_result3 == "GPA/MPA"),]
+
+#E
+EMA_GPA_ACR_MPA_ACR_GPA <- data[which(data$EMAclass == "GPA" 
+                                      & data$dcvas_result3 == "GPA/MPA"),]
+
+#D
+EMA_GPA_ACR_GPA <- data[which(data$EMAclass == "GPA" 
+                              & data$dcvas_result3 == "GPA"),]
+
+#F
+EMA_GPA_ACR_MPA <- data[which(data$EMAclass == "GPA" 
+                              & data$dcvas_result3 == "MPA"),]
+#C
+EMA_nonGPA_ACR_MPA <- data[which(data$EMAclass != "GPA" 
+                                 & data$dcvas_result3 == "MPA"),]
+#A
+EMA_nonGPA_ACR_GPA <- data[which(data$EMAclass != "GPA" 
+                                 & data$dcvas_result3 == "GPA"),]
+#G
+EMA_GPA_ACR_nonMPA <- data[which(data$EMAclass == "GPA" 
+                                 & data$dcvas_result3 != "MPA"
+                                 & data$dcvas_result3 != "GPA"
+                                 & data$dcvas_result3 != "GPA/MPA"),]
+
+
+
+all_GPAMPA <- data[which(data$EMAclass == "GPA"
+                         | data$dcvas_result3 == "GPA"
+                         | data$dcvas_result3 == "MPA"
+                         | data$dcvas_result3 == "GPA/MPA"),]
+
+
+describeFactors(data$dcvas_result3)
+
+#d
+EMA_GPA_ACR_nonMPA <- data[which(data$EMAclass == "GPA" 
+                                 & data$dcvas_result3 != "MPA"
+                                 & data$dcvas_result3 != "GPA/MPA"),]
+
+#f
+EMA_nonGPA_ACR_MPA <- data[which(data$EMAclass != "GPA" 
+                                 & (data$dcvas_result3 == "MPA"|data$dcvas_result3 == "GPA/MPA")),]
+#e
+EMA_GPA_ACR_MPA_inc <- data[which(data$EMAclass == "GPA" 
+                                  & (data$dcvas_result3 == "MPA"|data$dcvas_result3 == "GPA/MPA")),]
+
+
+
+##### SUPPLEMENT TABLE VARIABLE INVESTIGATION ####
+describeFactors(all_ACR$dcvas_result3)
+#### SUPP Table 1 ####
+
+
+describeFactors(GPA_ACR$gen)
+describeFactors(MPA_ACR$gen)
+describeFactors(UNC_ACR$gen)
+
+#Myalgia
+describeFactors(GPA_ACR$pvas_gen1___1)
+describeFactors(MPA_ACR$pvas_gen1___1)
+describeFactors(UNC_ACR$pvas_gen1___1)
+# glm(pvas_gen1___1 ~ dcvas_result3, data = all_ACR, family="binomial")
+# summary(glm(pvas_gen1___1 ~ dcvas_result3, data = all_ACR, family="binomial"))
+# exp(coef(glm(pvas_gen1___1 ~ dcvas_result3, data = all_ACR, family="binomial")))
+
+#Arthralgia or arthritis
+describeFactors(GPA_ACR$pvas_gen1___2)
+describeFactors(MPA_ACR$pvas_gen1___2)
+describeFactors(UNC_ACR$pvas_gen1___2)
+
+#Fever >= 38 deg C
+describeFactors(GPA_ACR$pvas_gen1___3)
+describeFactors(MPA_ACR$pvas_gen1___3)
+describeFactors(UNC_ACR$pvas_gen1___3)
+
+#Weight loss >= 5% body weight
+describeFactors(GPA_ACR$pvas_gen1___4)
+describeFactors(MPA_ACR$pvas_gen1___4)
+describeFactors(UNC_ACR$pvas_gen1___4)
+
+
+describeFactors(GPA_ACR$cuta)
+describeFactors(MPA_ACR$cuta)
+describeFactors(UNC_ACR$cuta)
+
+#Polymorphous exanthema
+describeFactors(GPA_ACR$pvas_cut2___1)
+describeFactors(MPA_ACR$pvas_cut2___1)
+describeFactors(UNC_ACR$pvas_cut2___1)
+
+#Livedo
+describeFactors(GPA_ACR$pvas_cut2___2)
+describeFactors(MPA_ACR$pvas_cut2___2)
+describeFactors(UNC_ACR$pvas_cut2___2)
+
+#Panniculitis
+describeFactors(GPA_ACR$pvas_cut2___3)
+describeFactors(MPA_ACR$pvas_cut2___3)
+describeFactors(UNC_ACR$pvas_cut2___3)
+
+#Purpura
+describeFactors(GPA_ACR$pvas_cut2___4)
+describeFactors(MPA_ACR$pvas_cut2___4)
+describeFactors(UNC_ACR$pvas_cut2___4)
+
+#Skin nodules
+describeFactors(GPA_ACR$pvas_cut2___5)
+describeFactors(MPA_ACR$pvas_cut2___5)
+describeFactors(UNC_ACR$pvas_cut2___5)
+
+#Infarct (nail edge lesion, splinter haemorrhage)
+describeFactors(GPA_ACR$pvas_cut2___6)
+describeFactors(MPA_ACR$pvas_cut2___6)
+describeFactors(UNC_ACR$pvas_cut2___6)
+
+#Ulcer (full-thickness necrosis)
+describeFactors(GPA_ACR$pvas_cut2___7)
+describeFactors(MPA_ACR$pvas_cut2___7)
+describeFactors(UNC_ACR$pvas_cut2___7)
+
+#Gangrene (extensive necrosis)
+describeFactors(GPA_ACR$pvas_cut2___8)
+describeFactors(MPA_ACR$pvas_cut2___8)
+describeFactors(UNC_ACR$pvas_cut2___8)
+
+#Other skin vasculitis (specify below)
+describeFactors(GPA_ACR$pvas_cut2___9)
+describeFactors(MPA_ACR$pvas_cut2___9)
+describeFactors(UNC_ACR$pvas_cut2___9)
+
+
+
+describeFactors(GPA_ACR$muc)
+describeFactors(MPA_ACR$muc)
+describeFactors(UNC_ACR$muc)
+
+#Mouth ulcers/granulomata
+describeFactors(GPA_ACR$pvas_mucous2___1)
+describeFactors(MPA_ACR$pvas_mucous2___1)
+describeFactors(UNC_ACR$pvas_mucous2___1)
+
+#Genital ulcers
+describeFactors(GPA_ACR$pvas_mucous2___2)
+describeFactors(MPA_ACR$pvas_mucous2___2)
+describeFactors(UNC_ACR$pvas_mucous2___2)
+
+#Adnexal inflammation (sialadenitis/ dacryocystitis)
+describeFactors(GPA_ACR$pvas_mucous2___3)
+describeFactors(MPA_ACR$pvas_mucous2___3)
+describeFactors(UNC_ACR$pvas_mucous2___3)
+
+#Significant proptosis
+describeFactors(GPA_ACR$pvas_mucous2___4)
+describeFactors(MPA_ACR$pvas_mucous2___4)
+describeFactors(UNC_ACR$pvas_mucous2___4)
+
+#Red eye (Epi)scleritis
+describeFactors(GPA_ACR$pvas_mucous2___5)
+describeFactors(MPA_ACR$pvas_mucous2___5)
+describeFactors(UNC_ACR$pvas_mucous2___5)
+
+#Red eye conjunctivitis/ blepharitis/keratitis
+describeFactors(GPA_ACR$pvas_mucous2___6)
+describeFactors(MPA_ACR$pvas_mucous2___6)
+describeFactors(UNC_ACR$pvas_mucous2___6)
+
+#Uveitis
+describeFactors(GPA_ACR$pvas_mucous2___7)
+describeFactors(MPA_ACR$pvas_mucous2___7)
+describeFactors(UNC_ACR$pvas_mucous2___7)
+
+#Blurred vision
+describeFactors(GPA_ACR$pvas_mucous2___8)
+describeFactors(MPA_ACR$pvas_mucous2___8)
+describeFactors(UNC_ACR$pvas_mucous2___8)
+
+#Sudden visual loss
+describeFactors(GPA_ACR$pvas_mucous2___9)
+describeFactors(MPA_ACR$pvas_mucous2___9)
+describeFactors(UNC_ACR$pvas_mucous2___9)
+
+#Retinal vasculitis/retinal vessel thrombosis/retinal exudates/haemorrhages
+describeFactors(GPA_ACR$pvas_mucous2___10)
+describeFactors(MPA_ACR$pvas_mucous2___10)
+describeFactors(UNC_ACR$pvas_mucous2___10)
+
+
+
+
+describeFactors(GPA_ACR$ent)
+describeFactors(MPA_ACR$ent)
+describeFactors(UNC_ACR$ent)
+
+#Bloody nasal discharge/crusts/ulcers/granuloma
+describeFactors(GPA_ACR$pvas_ent___1)
+describeFactors(MPA_ACR$pvas_ent___1)
+describeFactors(UNC_ACR$pvas_ent___1)
+
+#Paranasal sinus involvement
+describeFactors(GPA_ACR$pvas_ent___2)
+describeFactors(MPA_ACR$pvas_ent___2)
+describeFactors(UNC_ACR$pvas_ent___2)
+
+#ubglottic stenosis/ hoarseness /stridor
+describeFactors(GPA_ACR$pvas_ent___3)
+describeFactors(MPA_ACR$pvas_ent___3)
+describeFactors(UNC_ACR$pvas_ent___3)
+
+#Conductive hearing loss
+describeFactors(GPA_ACR$pvas_ent___4)
+describeFactors(MPA_ACR$pvas_ent___4)
+describeFactors(UNC_ACR$pvas_ent___4)
+
+#Sensorineural hearing loss
+describeFactors(GPA_ACR$pvas_ent___5)
+describeFactors(MPA_ACR$pvas_ent___5)
+describeFactors(UNC_ACR$pvas_ent___5)
+
+
+
+
+describeFactors(GPA_ACR$chest)
+describeFactors(MPA_ACR$chest)
+describeFactors(UNC_ACR$chest)
+
+#Wheeze or expiratory dyspnea
+describeFactors(GPA_ACR$pvas_chest___1)
+describeFactors(MPA_ACR$pvas_chest___1)
+describeFactors(UNC_ACR$pvas_chest___1)
+
+#Endobronchial/endotracheal involvement
+describeFactors(GPA_ACR$pvas_chest___2)
+describeFactors(MPA_ACR$pvas_chest___2)
+describeFactors(UNC_ACR$pvas_chest___2)
+
+#Nodules or cavities 
+describeFactors(GPA_ACR$pvas_chest___3)
+describeFactors(MPA_ACR$pvas_chest___3)
+describeFactors(UNC_ACR$pvas_chest___3)
+
+#Massive hemoptysis/alveolar hemorrhage 
+describeFactors(GPA_ACR$pvas_chest___4)
+describeFactors(MPA_ACR$pvas_chest___4)
+describeFactors(UNC_ACR$pvas_chest___4)
+
+#Respiratory failure
+describeFactors(GPA_ACR$pvas_chest___5)
+describeFactors(MPA_ACR$pvas_chest___5)
+describeFactors(UNC_ACR$pvas_chest___5)
+
+
+
+describeFactors(GPA_ACR$cardio)
+describeFactors(MPA_ACR$cardio)
+describeFactors(UNC_ACR$cardio)
+
+#Loss of pulses
+describeFactors(GPA_ACR$pvas_cv___1)
+describeFactors(MPA_ACR$pvas_cv___1)
+describeFactors(UNC_ACR$pvas_cv___1)
+
+#Bruits over accessible arteries
+describeFactors(GPA_ACR$pvas_cv___2)
+describeFactors(MPA_ACR$pvas_cv___2)
+describeFactors(UNC_ACR$pvas_cv___2)
+
+#Blood pressure discrepancy
+describeFactors(GPA_ACR$pvas_cv___3)
+describeFactors(MPA_ACR$pvas_cv___3)
+describeFactors(UNC_ACR$pvas_cv___3)
+
+#Claudication of extremities
+describeFactors(GPA_ACR$pvas_cv___4)
+describeFactors(MPA_ACR$pvas_cv___4)
+describeFactors(UNC_ACR$pvas_cv___4)
+
+#Ischaemic cardiac pain
+describeFactors(GPA_ACR$pvas_cv___5)
+describeFactors(MPA_ACR$pvas_cv___5)
+describeFactors(UNC_ACR$pvas_cv___5)
+
+#Cardiomyopathy
+describeFactors(GPA_ACR$pvas_cv___6)
+describeFactors(MPA_ACR$pvas_cv___6)
+describeFactors(UNC_ACR$pvas_cv___6)
+
+#Congestive cardiac failure
+describeFactors(GPA_ACR$pvas_cv___7)
+describeFactors(MPA_ACR$pvas_cv___7)
+describeFactors(UNC_ACR$pvas_cv___7)
+
+#Valvular heart disease
+describeFactors(GPA_ACR$pvas_cv___8)
+describeFactors(MPA_ACR$pvas_cv___8)
+describeFactors(UNC_ACR$pvas_cv___8)
+
+#Pericarditis
+describeFactors(GPA_ACR$pvas_cv___9)
+describeFactors(MPA_ACR$pvas_cv___9)
+describeFactors(UNC_ACR$pvas_cv___9)
+
+
+
+describeFactors(GPA_ACR$gi)
+describeFactors(MPA_ACR$gi)
+describeFactors(UNC_ACR$gi)
+
+#Abdominal pain
+describeFactors(GPA_ACR$pvas_gi___1)
+describeFactors(MPA_ACR$pvas_gi___1)
+describeFactors(UNC_ACR$pvas_gi___1)
+
+#Peritonitis
+describeFactors(GPA_ACR$pvas_gi___2)
+describeFactors(MPA_ACR$pvas_gi___2)
+describeFactors(UNC_ACR$pvas_gi___2)
+
+#Blood in stools or bloody diarrhea
+describeFactors(GPA_ACR$pvas_gi___3)
+describeFactors(MPA_ACR$pvas_gi___3)
+describeFactors(UNC_ACR$pvas_gi___3)
+
+#Bowel ischaemia
+describeFactors(GPA_ACR$pvas_gi___4)
+describeFactors(MPA_ACR$pvas_gi___4)
+describeFactors(UNC_ACR$pvas_gi___4)
+
+
+describeFactors(GPA_ACR$ren)
+describeFactors(MPA_ACR$ren)
+describeFactors(UNC_ACR$ren)
+
+#Hypertension >95th centile (for height)
+describeFactors(GPA_ACR$pvas_renal___1)
+describeFactors(MPA_ACR$pvas_renal___1)
+describeFactors(UNC_ACR$pvas_renal___1)
+
+#Proteinuria >0.3 g/24h,>20mg/mmol creatinine
+describeFactors(GPA_ACR$pvas_renal___2)
+describeFactors(MPA_ACR$pvas_renal___2)
+describeFactors(UNC_ACR$pvas_renal___2)
+
+#Haematuria >= 2+ or 5 rbc/hpf or red cell casts
+describeFactors(GPA_ACR$pvas_renal___3)
+describeFactors(MPA_ACR$pvas_renal___3)
+describeFactors(UNC_ACR$pvas_renal___3)
+
+#GFR 50-80ml/min/1.73 m2 *s
+describeFactors(GPA_ACR$pvas_renal___4)
+describeFactors(MPA_ACR$pvas_renal___4)
+describeFactors(UNC_ACR$pvas_renal___4)
+
+#GFR 15-49 ml/min/1.73 m2 *
+describeFactors(GPA_ACR$pvas_renal___5)
+describeFactors(MPA_ACR$pvas_renal___5)
+describeFactors(UNC_ACR$pvas_renal___5)
+
+#GFR < 15 ml/min/1.73m2 *
+describeFactors(GPA_ACR$pvas_renal___6)
+describeFactors(MPA_ACR$pvas_renal___6)
+describeFactors(UNC_ACR$pvas_renal___6)
+
+#Rise in creatinine > 10% or Creatinine clearance (GFR) fall > 25%
+describeFactors(GPA_ACR$pvas_renal___8)
+describeFactors(MPA_ACR$pvas_renal___8)
+describeFactors(UNC_ACR$pvas_renal___8)
+
+
+
+describeFactors(GPA_ACR$cns)
+describeFactors(MPA_ACR$cns)
+describeFactors(UNC_ACR$cns)
+
+#Headache
+describeFactors(GPA_ACR$pvas_cv___1)
+describeFactors(MPA_ACR$pvas_cv___1)
+describeFactors(UNC_ACR$pvas_cv___1)
+
+#Meningitis/encephalitis
+describeFactors(GPA_ACR$pvas_cv___2)
+describeFactors(MPA_ACR$pvas_cv___2)
+describeFactors(UNC_ACR$pvas_cv___2)
+
+#Organic confusion/cognitive dysfunction
+describeFactors(GPA_ACR$pvas_cv___3)
+describeFactors(MPA_ACR$pvas_cv___3)
+describeFactors(UNC_ACR$pvas_cv___3)
+
+#Seizures (not hypertensive)
+describeFactors(GPA_ACR$pvas_cv___4)
+describeFactors(MPA_ACR$pvas_cv___4)
+describeFactors(UNC_ACR$pvas_cv___4)
+
+#Stroke
+describeFactors(GPA_ACR$pvas_cv___5)
+describeFactors(MPA_ACR$pvas_cv___5)
+describeFactors(UNC_ACR$pvas_cv___5)
+
+#Cord lesion
+describeFactors(GPA_ACR$pvas_cv___6)
+describeFactors(MPA_ACR$pvas_cv___6)
+describeFactors(UNC_ACR$pvas_cv___6)
+
+#Cranial nerve palsy
+describeFactors(GPA_ACR$pvas_cv___7)
+describeFactors(MPA_ACR$pvas_cv___7)
+describeFactors(UNC_ACR$pvas_cv___7)
+
+#Sensory peripheral neuropathy
+describeFactors(GPA_ACR$pvas_cv___8)
+describeFactors(MPA_ACR$pvas_cv___8)
+describeFactors(UNC_ACR$pvas_cv___8)
+
+#Motor mononeuritis multiplex
+describeFactors(GPA_ACR$pvas_cv___9)
+describeFactors(MPA_ACR$pvas_cv___9)
+describeFactors(UNC_ACR$pvas_cv___9)
+
+#### SUPP Table 2 ####
+
+describeFactors(GPA_EMA$pvas_gen1___1)
+describeFactors(MPA_EMA$pvas_gen1___1)
+describeFactors(UNC_EMA$pvas_gen1___1)
+
+#### FIG 4a ####
+
+# df2 <- data.frame(supp=rep(c("Ankara", "ACR/Eular"), each=3),
+#                   dose=rep(c("General", "Cutaenous", "Mucous", "Cardiovascular", "ENT", "Chest", "GI", "Renal", "CNS", "PR3", "MPO"),2),
+#                   len=c(6.8, 15, 33, 4.2, 10, 29.5))
+# 
+# ggplot(data=df2, aes(x=dose, y=len, fill=supp)) + geom_bar(stat="identity", position=position_dodge())
+# 
+
+#### FIG 4b ####
+#### FIG 4c ####
 #### KAPPA STAT CALC ####
 
 ## Reassigning diagnosis
@@ -867,51 +1359,40 @@ print(paste("AUC for EMA-based classification (MPA): ", auc(roc_ema_mpa)))
 print(paste("AUC for DCVAS-based classification (MPA): ", auc(roc_dcvas_mpa)))
 
 
-##### SUPPLEMENT TABLE VARIABLE INVESTIGATION ####
-
-describeFactors(GPA_ACR$pvas_gen1___1)
-describeFactors(MPA_ACR$pvas_gen1___1)
-describeFactors(UNC_ACR$pvas_gen1___1)
-
-describeFactors(all_ACR$dcvas_result3)
-
-all_ACR <- data[which(data$dcvas_result3 != "GPA/MPA" 
-                       & data$dcvas_result3 != "EGPA"
-                       & data$dcvas_result3 != "unclassified"),]
-
-# glm(pvas_gen1___1 ~ dcvas_result3, data = all_ACR, family="binomial")
-# summary(glm(pvas_gen1___1 ~ dcvas_result3, data = all_ACR, family="binomial"))
-# exp(coef(glm(pvas_gen1___1 ~ dcvas_result3, data = all_ACR, family="binomial")))
-
-
-describeFactors(GPA_EMA$pvas_gen1___1)
-describeFactors(MPA_EMA$pvas_gen1___1)
-describeFactors(UNC_EMA$pvas_gen1___1)
-
-describeFactors(GPA_ACR$pvas_gen1___2)
-describeFactors(MPA_ACR$pvas_gen1___2)
-describeFactors(UNC_ACR$pvas_gen1___2)
-
-describeFactors(GPA_ACR$pvas_gen1___3)
-describeFactors(MPA_ACR$pvas_gen1___3)
-describeFactors(UNC_ACR$pvas_gen1___3)
-
-describeFactors(GPA_ACR$pvas_gen1___4)
-describeFactors(MPA_ACR$pvas_gen1___4)
-describeFactors(UNC_ACR$pvas_gen1___4)
-
-describeFactors(GPA_ACR$pvas_chest___3)
-describeFactors(MPA_ACR$pvas_chest___3)
-describeFactors(UNC_ACR$pvas_chest___3)
-
-describeFactors(GPA_ACR$pvas_chest___5)
-describeFactors(MPA_ACR$pvas_chest___5)
-describeFactors(UNC_ACR$pvas_chest___5)
-
-
 #### Additional Manuscript Stats #####
 
 data <- read.csv("New classification sheet-USE THIS.csv", header = TRUE)
+
+A <- data[which(data$dcvas_result3 == "GPA"
+                | data$dcvas_result3 == "GPA/MPA"),]
+
+B <- data[which(data$EMAclass == "GPA"
+                & data$dcvas_result3 != "GPA"
+                & data$dcvas_result3 != "GPA/MPA"),]
+
+C <- data[which(data$EMAclass == "GPA"
+                & data$dcvas_result3 != "GPA"
+                & data$dcvas_result3 == "MPA" 
+                & data$dcvas_result3 != "GPA/MPA"),]
+
+
+D <- data[which(data$EMAclass == "GPA"
+                & data$dcvas_result3 != "GPA"
+                & data$dcvas_result3 == "uncl AAV" 
+                & data$dcvas_result3 != "GPA/MPA"),]
+
+E <- data[which(data$EMAclass == "GPA"),]
+
+Fnum <- data[which((data$dcvas_result3 == "GPA" | data$dcvas_result3 == "GPA/MPA") 
+                   & data$EMAclass != "GPA"),]
+
+G <- data[which(data$dcvas_result3 == "GPA/MPA" 
+                & data$EMAclass != "GPA"),]
+
+H <- data[which(data$EMAclass != "GPA"
+                & data$dcvas_result3 != "GPA"
+                & data$diagnosis == "9"
+                & data$dcvas_result3 != "GPA/MPA"),]
 
 nlevels(as.factor(data$redcap_data_access_group))
 
@@ -938,6 +1419,4 @@ describeFactors(data$diagnosis)
 describeFactors(data$EMAclass)
 
 describeFactors(data$dcvas_result3)
-
-
 
